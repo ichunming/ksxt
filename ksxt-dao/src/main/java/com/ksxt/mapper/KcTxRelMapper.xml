@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.ksxt.dao.KcTxRelDao" >
+  <resultMap id="BaseResultMap" type="com.ksxt.model.KcTxRel" >
+    <id column="kc_id" jdbcType="INTEGER" property="kcId" />
+    <id column="tx_id" jdbcType="INTEGER" property="txId" />
+    <result column="create_date" jdbcType="TIMESTAMP" property="createDate" />
+    <result column="status" jdbcType="INTEGER" property="status" />
+    <result column="update_date" jdbcType="TIMESTAMP" property="updateDate" />
+  </resultMap>
+  
+  <sql id="Base_Column_List" >
+    kc_id, tx_id, create_date, status, update_date
+  </sql>
+  
+  <select id="getByKcId" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select 
+    <include refid="Base_Column_List" />
+    from kc_tx_rel
+    where kc_id = #{kcId,jdbcType=INTEGER}
+    and status = 1
+    order by tx_id asc
+  </select>
+  
+  <select id="getAll" resultMap="BaseResultMap" >
+    select 
+    <include refid="Base_Column_List" />
+    from kc_tx_rel
+    order by kc_id asc
+  </select>
+  
+  <update id="update" parameterType="com.ksxt.model.KcTxRel">
+	  update kc_tx_rel
+	  set status = #{status},
+	      update_date = #{updateDate}
+      where kc_id = #{kcId}
+      and tx_id = #{txId}
+      and status != #{status}
+  </update>
+  
+  <insert id="insert" parameterType="java.util.List">
+    insert into kc_tx_rel (kc_id, tx_id, create_date, status, update_date)
+    values
+    <foreach collection="list" item="item" separator=",">
+        (#{item.kcId}, #{item.txId}, #{item.createDate}, #{item.status}, #{item.updateDate})
+    </foreach>
+  </insert>
+  
+  <delete id="deleteByKcId" parameterType="java.lang.Integer">
+    delete from kc_tx_rel
+    where kc_id = #{kcId, jdbcType=INTEGER}
+  </delete>
+</mapper>

@@ -1,0 +1,23 @@
+package com.ksxt.common.constant;
+
+public enum TikuStatus {
+
+	UNIMPORT(0, "未导入"),
+	IMPORTED(1, "已导入");
+	
+	private int code;
+	private String desc;
+	
+	private TikuStatus(int code, String desc) {
+		this.code = code;
+		this.desc = desc;
+	}
+	
+	public int getCode() {
+		return code;
+	}
+
+	public String toString() {
+		return desc;
+	}
+}

@@ -1,0 +1,66 @@
+/**
+ * @author ming
+ * @date 2017年2月7日 上午10:09:24
+ */
+package com.ksxt.controller;
+
+import javax.servlet.http.HttpServletRequest;
+
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.RequestMapping;
+
+import com.ksxt.common.constant.ErrorCode;
+import com.ksxt.common.helper.SessionInfo;
+import com.ksxt.common.util.SessionUtil;
+import com.ksxt.core.helper.MessageManager;
+import com.ksxt.model.User;
+import com.ksxt.service.IUserService;
+import com.ksxt.vo.BaseResult;
+import com.ksxt.vo.UserForm;
+
+
+@Controller
+@RequestMapping("/user")
+public class UserController {
+	private static final Logger logger = LoggerFactory.getLogger(UserController.class);
+	
+	@Autowired
+	private IUserService userService;
+	
+	/**
+	 * 用户登入
+	 * @param userForm
+	 * @return
+	 */
+	@RequestMapping(value = "login")
+	public String login(UserForm userForm, HttpServletRequest request, Model model) {
+		logger.debug("login request...");
+		logger.debug("parameter:mobile[" + userForm.getMobile() + "], password[" + userForm.getPassword() + "]");
+		
+		// login
+		BaseResult result = userService.login(userForm);
+		
+		if(result.getCode().longValue() == ErrorCode.SUCCESS) {
+			// success
+			logger.debug("login success.");
+			User user = (User) result.getData();
+			// save SessionInfo
+			logger.debug("save session info...");
+			SessionInfo sessionInfo = new SessionInfo(user.getId(), user.getUsername(), user.getMobile());
+			SessionUtil.setSessionInfo(sessionInfo, request);
+			
+			// save cookie -- TODO
+			
+			return "home/index";
+		} else {
+			// fail
+			logger.debug("login fail.");
+			model.addAttribute("msg", MessageManager.getMsg(result.getCode().toString()));
+			return "login";
+		}
+	}
+}

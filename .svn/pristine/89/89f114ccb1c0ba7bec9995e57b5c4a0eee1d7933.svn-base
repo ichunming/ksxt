@@ -1,0 +1,90 @@
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+	pageEncoding="UTF-8"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions"%>
+<%@ include file="common/head.jsp"%>
+<html lang="zh-CN">
+<body>
+	<div class="body">
+		<%@ include file="common/menu.jsp"%>
+		<div class="content">
+			<%@ include file="common/message.jsp"%>
+			<c:if test="${kcList != null}">
+			    <form action="#" id="kc-mgr-form" method="post">
+	              <div style="display:none">
+                    <div>
+                        <input type="text" name="kcId" id="kcId"/>
+                    </div>
+                    <div>
+                        <input type="text" name="title" id="title"/>
+                    </div>
+                    <div>
+                        <input type="text" name="orderId" id="orderId" />
+                    </div>
+                    <div>
+                        <input type="text" name="status" id="status" />
+                    </div>
+	              </div>
+	              <div class="kcx">
+	                <div class="kcs-header">
+	                  <span class="kcs-header-id">ID</span>
+	                  <span class="kcs-header-title">课程名称</span>
+	                  <span class="kcs-header-order">课程顺序</span>
+	                  <span class="kcs-header-status">课程状态</span>
+	                  <span class="kcs-header-tiku">题库方案</span>
+	                </div>
+	                <div id="kc-list">
+		                <c:forEach var="kc" items="${kcList}" varStatus="vs">
+		                    <div class="kc-list">
+		                      <span class="kcs-id">${vs.index + 1}</span>
+		                      <input style="display:none" class="users-id" id="kcId${vs.index}" value="${kc.kcId}"></input>
+		                      <input class="kcs-title" id="title${vs.index}" value="${kc.title}" maxlength="25" ></input>
+		                      <input class="kcs-order" id="order${vs.index}" value="${kc.orderId}" maxlength="3" ></input>
+		                      <c:choose>
+		                       <c:when test="${kc.status == 0}">
+		                          <select id="status${kc.status}" class="kcs-status">
+			                          <option value="0" selected="selected">无效</option>
+		                              <option value="1">有效</option>
+	                              </select>
+		                       </c:when>
+		                       <c:otherwise>
+		                          <select id="status${kc.status}" class="kcs-status">
+			                          <option value="0">无效</option>
+		                              <option value="1" selected="selected">有效</option>
+	                              </select>
+		                       </c:otherwise>
+		                      </c:choose>
+		                      <label><input name="tiku" type="checkbox" value="1" ${kc.danxuanCk} />单选</label>
+		                      <label><input name="tiku" type="checkbox" value="2" ${kc.duoxuanCk} />多选</label>
+		                      <label><input name="tiku" type="checkbox" value="3" ${kc.panduanCk} />判断</label>
+		                      <label><input name="tiku" type="checkbox" value="4" ${kc.jisuanfenxiCk} />计算分析</label>
+		                      <label><input name="tiku" type="checkbox" value="5" ${kc.anlifenxiCk} />案例分析</label>
+		                      <span class="kcs-save"><button type="submit" onclick="return update(${vs.index})">保存</button></span>
+		                      <span class="kcs-delete"><button type="submit" onclick="return del(${kc.kcId})">删除</button></span>
+		                    </div>
+		                </c:forEach>
+	                </div>
+	              </div>
+	            </form>
+			</c:if>
+		</div>
+	</div>
+</body>
+<%@ include file="common/foot.jsp"%>
+<script type="text/javascript">
+var del = function(kcId) {
+	$("#kcId").val(kcId);
+	$("#kc-mgr-form").attr("action", "/kc/mgr/delete/");
+    return true;
+};
+var update = function(index) {
+	$("#kcId").val($("#kcId" + index).val());
+	$("#title").val($("#title" + index).val());
+	$("#orderId").val($("#orderId" + index).val());
+	$("#status").val($("#status" + index).find("option:selected").val());
+	
+	$("#kc-mgr-form").attr("action", "/kc/mgr/update");
+    return true;
+};
+</script>
+</html>

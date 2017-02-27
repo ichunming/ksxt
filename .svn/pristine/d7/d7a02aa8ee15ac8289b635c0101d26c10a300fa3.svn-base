@@ -1,0 +1,86 @@
+/**
+ * @author ming
+ * @date 2017年2月7日 下午4:52:52
+ */
+package com.ksxt.core.helper;
+
+import java.io.IOException;
+import java.util.Map;
+
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
+import com.ksxt.common.constant.MessageType;
+import com.ksxt.common.util.PropUtil;
+import com.ksxt.common.util.StringUtil;
+
+public class MessageManager {
+	private MessageManager(){}
+	
+	private final static Logger logger = LoggerFactory.getLogger(MessageManager.class);
+	
+	private static Map<String, String> messages;
+	
+	private static void init() {
+		try {
+			logger.debug("load message.properties...");
+			messages = new PropUtil().read(MessageManager.class.getClassLoader().getResource("message.properties").getPath());
+		} catch (IOException e) {
+			logger.error("load message.properties fail.");
+		}
+	}
+	
+	public static void destory() {
+		logger.debug("destory messages...");
+		messages.clear();
+		messages = null;
+	}
+	
+	public static Message getSucc(String code) {
+		return getMsg(code.toString(), MessageType.SUCC);
+	}
+	
+	public static Message getInfo(String code) {
+		return getMsg(code.toString(), MessageType.INFO);
+	}
+	
+	public static Message getWarn(String code) {
+		return getMsg(code.toString(), MessageType.WARN);
+	}
+	
+	public static Message getError(String code) {
+		return getMsg(code.toString(), MessageType.ERROR);
+	}
+	
+	public static Message getMsg(String code) {
+		Message message = MessageManager.getWarn(code);
+		if(!StringUtil.isEmpty(message.getContent())) {
+			return message;
+		}
+		
+		message = MessageManager.getInfo(code);
+		if(!StringUtil.isEmpty(message.getContent())) {
+			return message;
+		}
+		
+		message = MessageManager.getError(code);
+		if(!StringUtil.isEmpty(message.getContent())) {
+			return message;
+		}
+		
+		message = MessageManager.getSucc(code);
+		if(!StringUtil.isEmpty(message.getContent())) {
+			return message;
+		}
+		
+		return null;
+	}
+	
+	private static Message getMsg(String code, MessageType type) {
+		if(null == messages || messages.isEmpty()) {
+			init();
+		}
+		Message message = new Message(type.getClazz(), messages.get(type.getCode() + code));
+		return message;
+	}
+}

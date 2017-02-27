@@ -1,0 +1,4 @@
+#domain setting
+domain.url=localhost:8081
+#nosession url
+nosession.url=/user/login

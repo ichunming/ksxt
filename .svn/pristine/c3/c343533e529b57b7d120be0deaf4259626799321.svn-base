@@ -1,0 +1,168 @@
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+	pageEncoding="UTF-8"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions"%>
+<%@ include file="common/head.jsp"%>
+<html lang="zh-CN">
+<body>
+	<div class="body">
+		<%@ include file="common/menu.jsp"%>
+		<div class="content">
+			<%@ include file="common/message.jsp"%>
+			    <form action="#" id="tk-mgr-form" method="post">
+	              <div style="display:none">
+                    <div>
+                        <input type="text" name="kcId" id="kcId"/>
+                    </div>
+                    <div>
+                        <input type="text" name="title" id="title"/>
+                    </div>
+                    <div>
+                        <input type="text" name="orderId" id="orderId" />
+                    </div>
+                    <div>
+                        <input type="text" name="status" id="status" />
+                    </div>
+                    <div>
+                        <input type="text" name="danxuanCk" id="danxuanCk" />
+                    </div>
+                    <div>
+                        <input type="text" name="duoxuanCk" id="duoxuanCk" />
+                    </div>
+                    <div>
+                        <input type="text" name="panduanCk" id="panduanCk" />
+                    </div>
+                    <div>
+                        <input type="text" name="jisuanfenxiCk" id="jisuanfenxiCk" />
+                    </div>
+                    <div>
+                        <input type="text" name="anlifenxiCk" id="anlifenxiCk" />
+                    </div>
+	              </div>
+	              <div class="tks">
+	                <div class="tks-header">
+	                  <span class="tks-header-id">ID</span>
+	                  <span class="tks-header-kc-name">课程名称</span>
+	                  <span class="tks-header-tk-name">题库名称</span>
+	                  <span class="tks-header-status">题库状态</span>
+	                  <span><button id="btn-add-tk" type="submit" onclick="return add()">上传题库</button></span>
+	                </div>
+	                <div id="tk-list">
+	                   <c:if test="${tkList != null}">
+		                <c:forEach var="tk" items="${tkList}" varStatus="vs">
+		                    <div class="tks-list">
+		                      <span class="tks-id">${vs.index + 1}</span>
+		                      <input style="display:none" class="tks-id" id="tkId${vs.index}" value="${tk.tkId}"></input>
+		                      <input class="tks-title" id="title${vs.index}" value="${tk.name}" maxlength="25" ></input>
+		                      <input class="tks-order" id="orderId${vs.index}" value="${tk.orderId}" maxlength="3" ></input>
+		                      <c:choose>
+		                       <c:when test="${kc.status == 0}">
+		                          <select id="status${kc.status}" class="kcs-status">
+			                          <option value="0" selected="selected">无效</option>
+		                              <option value="1">有效</option>
+	                              </select>
+		                       </c:when>
+		                       <c:otherwise>
+		                          <select id="status${kc.status}" class="kcs-status">
+			                          <option value="0">无效</option>
+		                              <option value="1" selected="selected">有效</option>
+	                              </select>
+		                       </c:otherwise>
+		                      </c:choose>
+		                      <div class="kcs-tx">
+			                      <label><input name="tx${vs.index}" type="checkbox" value="1" ${kc.danxuanCk} />单选</label>
+			                      <label><input name="tx${vs.index}" type="checkbox" value="2" ${kc.duoxuanCk} />多选</label>
+			                      <label><input name="tx${vs.index}" type="checkbox" value="3" ${kc.panduanCk} />判断</label>
+			                      <label><input name="tx${vs.index}" type="checkbox" value="4" ${kc.jisuanfenxiCk} />计算分析</label>
+			                      <label><input name="tx${vs.index}" type="checkbox" value="5" ${kc.anlifenxiCk} />案例分析</label>
+			                      <span class="kcs-save"><button type="submit" onclick="return update(${vs.index})">保存</button></span>
+			                      <span class="kcs-delete"><button type="submit" onclick="return del(${kc.kcId})">删除</button></span>
+		                      </div>
+		                    </div>
+		                </c:forEach>
+		                </c:if>
+	                </div>
+	              </div>
+	            </form>
+		</div>
+	</div>
+</body>
+<%@ include file="common/foot.jsp"%>
+<script type="text/javascript">
+var del = function(kcId) {
+	$("#kcId").val(kcId);
+	$("#kc-mgr-form").attr("action", "/kc/mgr/delete/");
+    return true;
+};
+var update = function(index) {
+	$("#kcId").val($("#kcId" + index).val());
+	$("#title").val($("#title" + index).val());
+	$("#orderId").val($("#orderId" + index).val());
+	$("#status").val($("#status" + index).find("option:selected").val());
+	setTx(index);
+	
+	if(!checkKc()) {
+		return false;
+	}
+	
+	$("#kc-mgr-form").attr("action", "/kc/mgr/update");
+    return true;
+};
+var save = function(index) {
+	$("#title").val($("#title" + index).val());
+	$("#orderId").val($("#orderId" + index).val());
+	$("#status").val($("#status" + index).find("option:selected").val());
+	setTx(index);
+	
+    if(!checkKc()) {
+		return false;
+	}
+    
+    $("#kc-mgr-form").attr("action", "/kc/mgr/save");
+    return true;
+};
+var add = function() {
+	$("#btn-add-kc").attr("disabled", "disabled");
+	$("#kc-list").append('<div class="kcs-list"><span class="kcs-id">*</span>&nbsp;<input class="kcs-title" id="title99" value="" maxlength="25" ></input>&nbsp;<input class="kcs-order" id="orderId99" value="99" maxlength="3" ></input>&nbsp;<select id="status99" class="kcs-status"><option value="0">无效</option><option value="1" selected="selected">有效</option></select>&nbsp;<div class="kcs-tx"><label><input name="tx99" type="checkbox" value="1" />单选</label>&nbsp;<label><input name="tx99" type="checkbox" value="2" />多选</label>&nbsp;<label><input name="tx99" type="checkbox" value="3" />判断</label>&nbsp;<label><input name="tx99" type="checkbox" value="4" />计算分析</label>&nbsp;<label><input name="tx99" type="checkbox" value="5" />案例分析</label>&nbsp;<span class="kcs-save"><button type="submit" onclick="return save(99)">保存</button></span>&nbsp;<span class="kcs-delete"><button disabled="disabled">删除</button></span></div></div>');
+	return false;
+};
+var checkKc = function() {
+	var title = $("#title").val();
+    
+    if(title.trim() == "") {
+        $(".divMsg span").text("课程名称不能为空");
+        return false;
+    }
+    
+    return true;
+};
+var setTx = function(index) {
+	$('input[name="tx' + index + '"]:checked').each(function(){ 
+		switch($(this).val()) {
+		case '1':
+			// danxuan
+			$('#danxuanCk').val($(this).val());
+			break;
+		case '2':
+			// duoxuan
+            $('#duoxuanCk').val($(this).val());
+            break;
+		case '3':
+            // panduan
+            $('#panduanCk').val($(this).val());
+            break;
+		case '4':
+			// jisuanfenxi
+            $('#jisuanfenxiCk').val($(this).val());
+            break;
+		case '5':
+			// anlifenxi
+            $('#anlifenxiCk').val($(this).val());
+            break;
+        default:
+            break;
+		}
+	});
+};
+</script>
+</html>

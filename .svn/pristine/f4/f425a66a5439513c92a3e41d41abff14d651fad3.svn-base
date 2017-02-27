@@ -1,0 +1,188 @@
+/**
+ * @author ming
+ * @date 2017年2月7日 上午10:09:24
+ */
+package com.ksxt.controller;
+
+import java.util.ArrayList;
+import java.util.List;
+
+import javax.servlet.http.HttpServletRequest;
+
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
+
+import com.ksxt.common.constant.ErrorCode;
+import com.ksxt.common.constant.UserRole;
+import com.ksxt.common.helper.SessionInfo;
+import com.ksxt.common.util.SessionUtil;
+import com.ksxt.common.util.StringUtil;
+import com.ksxt.core.helper.Message;
+import com.ksxt.core.helper.MessageManager;
+import com.ksxt.model.User;
+import com.ksxt.service.IUserService;
+import com.ksxt.vo.BaseResult;
+import com.ksxt.vo.KsxtPageInfo;
+import com.ksxt.vo.UserForm;
+
+
+@Controller
+@RequestMapping("/user")
+public class UserController {
+	private static final Logger logger = LoggerFactory.getLogger(UserController.class);
+	
+	@Autowired
+	private IUserService userService;
+	
+	/**
+	 * 用户登入
+	 * @param userForm
+	 * @return
+	 */
+	@RequestMapping(value = "login")
+	public String login(UserForm userForm, HttpServletRequest request, Model model) {
+		logger.debug("login request...");
+		
+		// check SessionInfo
+		SessionInfo sessionInfo = SessionUtil.getSessionInfo(request);
+		/*if(null != sessionInfo && null != sessionInfo.getUid()) {
+			// already login
+			logger.debug("already login.");
+			return "redirect:/kecheng/list";
+		}*/
+		
+		// check parameter
+		logger.debug("check parameter...");
+		if((StringUtil.isEmpty(userForm.getUsername())) || StringUtil.isEmpty(userForm.getPassword())) {
+			return "login";
+		}
+		
+		// login
+		logger.debug("parameter:username[" + userForm.getUsername() + "], password[" + userForm.getPassword() + "], mobile[" + userForm.getMobile() + "]");
+		BaseResult result = userService.login(userForm, UserRole.ADMIN.getCode());
+		
+		if(result.getCode().longValue() == ErrorCode.SUCCESS) {
+			// success
+			logger.debug("login success.");
+			User user = (User) result.getData();
+			// save SessionInfo
+			logger.debug("save session info...");
+			sessionInfo = new SessionInfo(user.getId(), user.getUsername(), user.getMobile());
+			SessionUtil.setSessionInfo(sessionInfo, request);
+			
+			// save cookie -- TODO
+			
+			return "redirect:/user/mgr/1";
+		} else {
+			// fail
+			logger.debug("login fail.");
+			model.addAttribute("msg", MessageManager.getMsg(result.getCode().toString()));
+			return "login";
+		}
+	}
+	
+	@RequestMapping(value = "mgr/{page}")
+	public String userMgr(@PathVariable Integer page, Model model) {
+		logger.debug("user mgr request...");
+		logger.debug("parameter:page[" + page + "]");
+		
+		// get user info list
+		logger.debug("get user info list...");
+		KsxtPageInfo<User> pageInfo = userService.getUsers(page);
+		
+		if(pageInfo.getSize() == 0) {
+			logger.debug("无用户数据");
+			if(!model.containsAttribute("msg")) {
+				model.addAttribute("msg", new Message("无用户数据"));
+			}
+		} else {
+			List<Long> uids = new ArrayList<Long>();
+			for(User user : pageInfo.getList()) {
+				if(user.getStatus() == 0) {
+					uids.add(user.getId());
+				}
+			}
+			
+			if(uids.size() > 0) {
+				model.addAttribute("uids", StringUtil.toString(uids, ","));
+			}
+			model.addAttribute("pageInfo", pageInfo);
+		}
+		return "user-mgr";
+	}
+	
+	@RequestMapping(value="mgr/pass/{page}")
+	public String passAll(@PathVariable Integer page) {
+		logger.debug("pass all users request...");
+		logger.debug("parameter:page[" + page + "]");
+		
+		userService.passAll();
+		
+		return "redirect:/user/mgr/" + page;
+	}
+	
+	@RequestMapping(value="mgr/pass/{page}/{uid}")
+	public String pass(@PathVariable Integer page, @PathVariable String uid) {
+		logger.debug("pass user request...");
+		logger.debug("parameter:page[" + page + "], uid[" + uid + "]");
+		
+		// parse uid
+		List<String> uids = StringUtil.toList(uid, ",");
+		userService.pass(uids);
+		
+		return "redirect:/user/mgr/" + page;
+	}
+	
+	@RequestMapping(value="mgr/delete/{page}/{uid}")
+	public String delete(@PathVariable Integer page, @PathVariable Long uid) {
+		logger.debug("delete user request...");
+		logger.debug("parameter:page[" + page + "], uid[" + uid + "]");
+		
+		// delete user
+		userService.delete(uid);
+		
+		return "redirect:/user/mgr/" + page;
+	}
+	
+	@RequestMapping(value="mgr/update/{page}")
+	public String update(@PathVariable Integer page, UserForm userForm, RedirectAttributes model) {
+		logger.debug("update user request...");
+		logger.debug("parameter:uid[" + userForm.getUid() + "], username[" + userForm.getUsername() + 
+				",password[" + userForm.getPassword() + "], mobile" + userForm.getMobile() + "]");
+		
+		// update user
+		logger.debug("update user...");
+		BaseResult result = userService.update(userForm);
+		
+		if(result.getCode().longValue() != ErrorCode.SUCCESS.longValue()) {
+			logger.debug("update user fail.");
+			model.addFlashAttribute("msg", MessageManager.getMsg(result.getCode().toString()));
+		}
+		
+		return "redirect:/user/mgr/" + page;
+	}
+	
+	@RequestMapping("mgr/save/{page}")
+	public String save(@PathVariable Integer page, UserForm userForm, RedirectAttributes model) {
+		logger.debug("save user request...");
+		logger.debug("parameter:username[" + userForm.getUsername() + 
+				",password[" + userForm.getPassword() + "], mobile" + userForm.getMobile() + "]");
+		
+		// save user
+		logger.debug("save user...");
+		BaseResult result = userService.save(userForm);
+		
+		if(result.getCode().longValue() != ErrorCode.SUCCESS.longValue()) {
+			logger.debug("save user fail.");
+			model.addFlashAttribute("msg", MessageManager.getMsg(result.getCode().toString()));
+		}
+		
+		return "redirect:/user/mgr/" + page;
+	}
+}

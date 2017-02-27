@@ -1,0 +1,4 @@
+jdbc.validationQuery=SELECT 1
+jdbc.url=jdbc:mysql://chenhailong.cn:3306/ksxtdb?useUnicode=true&characterEncoding=UTF-8&zeroDateTimeBehavior=convertToNull&allowMultiQueries=true
+jdbc.username=admin
+jdbc.password=test123

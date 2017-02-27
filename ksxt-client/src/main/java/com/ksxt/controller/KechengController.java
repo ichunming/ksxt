@@ -1,0 +1,77 @@
+/**
+ * @author ming
+ * @date 2017年2月15日 下午4:15:02
+ */
+package com.ksxt.controller;
+
+import java.util.List;
+
+import javax.servlet.http.HttpServletResponse;
+
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.RequestMapping;
+
+import com.ksxt.common.constant.SystemConstant;
+import com.ksxt.common.util.CookieUtil;
+import com.ksxt.core.configuration.ApiConfiguration;
+import com.ksxt.model.Kecheng;
+import com.ksxt.service.IKechengService;
+
+@Controller
+@RequestMapping("/kecheng")
+public class KechengController {
+	private static Logger logger = LoggerFactory.getLogger(KechengController.class);
+	
+	@Autowired
+	private IKechengService kechengService;
+	
+	@Autowired
+	private ApiConfiguration config;
+	
+	@RequestMapping("list")
+	public String list(Model model) {
+		logger.debug("kecheng list request...");
+		
+		// get kecheng list
+		logger.debug("get kecheng list...");
+		List<Kecheng> kcs = kechengService.getValidKechengs();
+
+		if(kcs.size() == 0) {
+			// no kecheng information
+			logger.debug("no kecheng information.");
+			return "home/main";
+		}
+		
+		// return kecheng list
+		model.addAttribute("kcList", kcs);
+		
+		return "kechengList";
+	}
+	
+	@RequestMapping("view")
+	public String view(Integer kcId, Model model, HttpServletResponse response) {
+		logger.debug("kecheng view request...");
+		logger.debug("parameter:kcId[" + kcId + "]");
+
+		CookieUtil.setCookie(response, SystemConstant.COOKIES_KECHENG_ID, kcId.toString(), config.getDomainUrl());
+		
+		// get kecheng
+		logger.debug("get kecheng...");
+		Kecheng kc = kechengService.getKecheng(kcId);
+
+		if(null == kc) {
+			// no kecheng information
+			logger.debug("parameter error.");
+			return "redirect:/404";
+		}
+		
+		// return kecheng
+		model.addAttribute("kc", kc);
+		
+		return "kecheng";
+	}
+}

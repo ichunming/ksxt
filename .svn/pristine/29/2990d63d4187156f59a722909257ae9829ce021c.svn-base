@@ -1,0 +1,5 @@
+#surefire
+#Sun Feb 12 19:28:56 CST 2017
+user.dir=D\:\\work\\ksxt\\source\\ksxt\\ksxt-client
+localRepository=D\:\\repository\\maven_repo\\.m2\\repository
+basedir=D\:\\work\\ksxt\\source\\ksxt\\ksxt-client

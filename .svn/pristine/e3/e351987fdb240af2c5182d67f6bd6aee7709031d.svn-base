@@ -1,0 +1,13 @@
+package com.ksxt.dao;
+
+import java.util.List;
+
+import com.ksxt.model.Tiku;
+import com.ksxt.vo.TikuParam;
+
+public interface TikuDao extends GenericDao<Tiku, Integer>{
+
+	public Integer getCurMaxId();
+	
+	public List<Tiku> getList(TikuParam param);
+}

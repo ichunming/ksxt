@@ -1,0 +1,11 @@
+package com.ksxt.dao;
+
+import java.util.List;
+
+import com.ksxt.model.KcTxRel;
+
+public interface KcTxRelDao {
+	public List<KcTxRel> getByKcId(Integer kcId);
+	
+	public List<KcTxRel> getAll();
+}

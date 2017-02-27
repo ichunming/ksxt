@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="utf-8">
+    <link rel="stylesheet" href="base.css">
+    <title>kaoshixitong</title>
+  </head>
+  <body>
+  	<div class="head">welcome</div>
+    <div class="body">
+      <div class="menu">
+        <ul>
+          <li><a href="#">用户管理</a>
+            <ul>
+              <li class="user"><a href="user-add.htm">用户添加</a></li>
+              <li class="user"><a href="#">用户修改</a></li>
+              <li class="user"><a href="user-check.htm">用户审核</a></li>
+            </ul>
+          </li>
+
+          <li><a href="#">课程管理</a>
+            <ul>
+              <li class="user"><a href="#">课程管理</a></li>
+              <li class="user"><a href="#">科目管理</a></li>
+              <li class="user"><a href="#">章节管理</a></li>
+              <li class="user"><a href="#">题库管理</a></li>
+            </ul>
+          </li>
+
+          <li><a href="#">试卷管理</a>
+            <ul>
+              <li class="exam"><a href="#">试卷方案</a></li>
+              <li class="exam"><a href="#">试题查看</a></li>
+            </ul>
+          </li>
+        </ul>
+      </div>
+      <div class="content">
+        <form action="#">
+          <div class="users">
+            <div class="users-header">
+              <span class="users-header-id">ID</span>
+              <span class="users-header-name">用户名</span>
+              <span class="users-header-mobile">手机号</span>
+              <span class="users-header-perm">权限</span>
+              <span class="users-header-pswd">密码</span>
+            </div>
+            <div class="users-list">
+              <span class="users-id">1</span>
+              <input class="users-name" type="text" name="name" value="Ming">
+              <input class="users-mobile" type="text" name="mobile" value="13761114112">
+              <input class="users-perm" type="text" name="perm" value="1">
+              <input class="users-pswd" type="text" name="pswd" value="123456">
+              <span class="users-save"><button onclick="#">保存</button></span>
+              <span class="users-delete"><button onclick="#">删除</button></span>
+            </div>
+            <div class="users-list">
+              <span class="users-id">2</span>
+              <input class="users-name" type="text" name="name" value="Ting">
+              <input class="users-mobile" type="text" name="mobile" value="18963314312">
+              <input class="users-perm" type="text" name="perm" value="2">
+              <input class="users-pswd" type="text" name="pswd" value="123456">
+              <span class="users-save"><button onclick="#">保存</button></span>
+              <span class="users-delete"><button onclick="#">删除</button></span>
+            </div>
+            <div class="users-list">
+              <span class="users-id">3</span>
+              <input class="users-name" type="text" name="name" value="Ming">
+              <input class="users-mobile" type="text" name="mobile" value="13761114112">
+              <input class="users-perm" type="text" name="perm" value="1">
+              <input class="users-pswd" type="text" name="pswd" value="123456">
+              <span class="users-save"><button onclick="#">保存</button></span>
+              <span class="users-delete"><button onclick="#">删除</button></span>
+            </div>
+            <div class="users-list">
+              <span class="users-id">4</span>
+              <input class="users-name" type="text" name="name" value="Ting">
+              <input class="users-mobile" type="text" name="mobile" value="18963314312">
+              <input class="users-perm" type="text" name="perm" value="2">
+              <input class="users-pswd" type="text" name="pswd" value="123456">
+              <span class="users-save"><button onclick="#">保存</button></span>
+              <span class="users-delete"><button onclick="#">删除</button></span>
+            </div>
+
+            <div class="page-nav">
+              <button onclick="#">上一页</button>
+              <button onclick="#">下一页</button>
+            </div>
+          </div>
+        </form>
+      </div>
+    </div>
+	<script src="http://cdn.bootcss.com/jquery/1.11.2/jquery.min.js"></script>
+  </body>
+  <script type="text/javascript">
+    function show(type) {
+      $(".m1").toggle();
+    }
+  </script>
+</html>

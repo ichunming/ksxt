@@ -1,0 +1,6 @@
+package com.ksxt.dao;
+
+import com.ksxt.model.Shijuanfangan;
+
+public interface ShijuanfanganDao extends GenericDao<Shijuanfangan, Long> {
+}

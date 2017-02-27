@@ -1,0 +1,6 @@
+package com.ksxt.dao;
+
+import com.ksxt.model.Kecheng;
+
+public interface KechengDao extends GenericDao<Kecheng, Integer> {
+}

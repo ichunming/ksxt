@@ -1,0 +1,17 @@
+package com.ksxt.common.constant;
+
+import java.io.File;
+
+public class SystemSettings {
+	// 开发模式
+	public static boolean DEBUG_MODE = false;
+	
+	public static final int PAGE_SIZE = 2;
+	// 分页数量
+	
+	// 批处理数量
+	public static final int BATCH_SIZE = 100;
+	
+	// 临时目录
+	public static final String TEMP_DIR = "temp" + File.separator;
+}

@@ -1,0 +1,163 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ksxt.dao.AnlifenxiSubDao">
+  <resultMap id="BaseResultMap" type="com.ksxt.model.AnlifenxiSub">
+    <id column="id" jdbcType="BIGINT" property="id" />
+    <result column="alfx_id" jdbcType="BIGINT" property="alfxId" />
+    <result column="subject" jdbcType="VARCHAR" property="subject" />
+    <result column="order_id" jdbcType="INTEGER" property="orderId" />
+    <result column="option_a" jdbcType="VARCHAR" property="optionA" />
+    <result column="option_b" jdbcType="VARCHAR" property="optionB" />
+    <result column="option_c" jdbcType="VARCHAR" property="optionC" />
+    <result column="option_d" jdbcType="VARCHAR" property="optionD" />
+    <result column="answer" jdbcType="VARCHAR" property="answer" />
+    <result column="analysis" jdbcType="VARCHAR" property="analysis" />
+    <result column="create_date" jdbcType="TIMESTAMP" property="createDate" />
+    <result column="update_date" jdbcType="TIMESTAMP" property="updateDate" />
+  </resultMap>
+  
+  <sql id="Base_Column_List">
+    id, alfx_id, subject, order_id, option_a, option_b, option_c, option_d, answer, analysis, 
+    create_date, update_date
+  </sql>
+  
+  <select id="select" parameterType="java.lang.Long" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from anlifenxi_sub
+    where id = #{id,jdbcType=BIGINT}
+  </select>
+  
+  <delete id="delete" parameterType="java.lang.Long">
+    delete from anlifenxi_sub
+    where id = #{id,jdbcType=BIGINT}
+  </delete>
+  
+  <insert id="insert" parameterType="com.ksxt.model.AnlifenxiSub">
+    insert into anlifenxi_sub
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        id,
+      </if>
+      <if test="alfxId != null">
+        alfx_id,
+      </if>
+      <if test="subject != null">
+        subject,
+      </if>
+      <if test="orderId != null">
+        order_id,
+      </if>
+      <if test="optionA != null">
+        option_a,
+      </if>
+      <if test="optionB != null">
+        option_b,
+      </if>
+      <if test="optionC != null">
+        option_c,
+      </if>
+      <if test="optionD != null">
+        option_d,
+      </if>
+      <if test="answer != null">
+        answer,
+      </if>
+      <if test="analysis != null">
+        analysis,
+      </if>
+      <if test="createDate != null">
+        create_date,
+      </if>
+      <if test="updateDate != null">
+        update_date,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        #{id,jdbcType=BIGINT},
+      </if>
+      <if test="alfxId != null">
+        #{alfxId,jdbcType=VARCHAR},
+      </if>
+      <if test="subject != null">
+        #{subject,jdbcType=VARCHAR},
+      </if>
+      <if test="orderId != null">
+        #{orderId,jdbcType=INTEGER},
+      </if>
+      <if test="optionA != null">
+        #{optionA,jdbcType=VARCHAR},
+      </if>
+      <if test="optionB != null">
+        #{optionB,jdbcType=VARCHAR},
+      </if>
+      <if test="optionC != null">
+        #{optionC,jdbcType=VARCHAR},
+      </if>
+      <if test="optionD != null">
+        #{optionD,jdbcType=VARCHAR},
+      </if>
+      <if test="answer != null">
+        #{answer,jdbcType=VARCHAR},
+      </if>
+      <if test="analysis != null">
+        #{analysis,jdbcType=VARCHAR},
+      </if>
+      <if test="createDate != null">
+        #{createDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateDate != null">
+        #{updateDate,jdbcType=TIMESTAMP},
+      </if>
+    </trim>
+  </insert>
+  
+  <update id="update" parameterType="com.ksxt.model.AnlifenxiSub">
+    update anlifenxi_sub
+    <set>
+      <if test="alfxId != null">
+        alfx_id = #{alfxId,jdbcType=BIGINT},
+      </if>
+      <if test="subject != null">
+        subject = #{subject,jdbcType=VARCHAR},
+      </if>
+      <if test="orderId != null">
+        order_id = #{orderId,jdbcType=INTEGER},
+      </if>
+      <if test="optionA != null">
+        option_a = #{optionA,jdbcType=VARCHAR},
+      </if>
+      <if test="optionB != null">
+        option_b = #{optionB,jdbcType=VARCHAR},
+      </if>
+      <if test="optionC != null">
+        option_c = #{optionC,jdbcType=VARCHAR},
+      </if>
+      <if test="optionD != null">
+        option_d = #{optionD,jdbcType=VARCHAR},
+      </if>
+      <if test="answer != null">
+        answer = #{answer,jdbcType=VARCHAR},
+      </if>
+      <if test="analysis != null">
+        analysis = #{analysis,jdbcType=VARCHAR},
+      </if>
+      <if test="createDate != null">
+        create_date = #{createDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateDate != null">
+        update_date = #{updateDate,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+  
+  <select id="getSubs" parameterType="java.lang.Long" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from anlifenxi_sub
+    where alfx_id = #{alfxId,jdbcType=BIGINT}
+    order by order_id asc
+  </select>
+</mapper>

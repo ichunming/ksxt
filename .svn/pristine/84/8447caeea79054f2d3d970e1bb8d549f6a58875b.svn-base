@@ -1,0 +1,106 @@
+/**
+ * @author ming
+ * @date 2017年2月16日 下午3:11:33
+ */
+package com.ksxt.service.impl;
+
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+
+import com.ksxt.common.constant.ErrorCode;
+import com.ksxt.core.exception.ApplicationException;
+import com.ksxt.dao.AnlifenxiDao;
+import com.ksxt.dao.DanxuanDao;
+import com.ksxt.dao.DuoxuanDao;
+import com.ksxt.dao.JisuanfenxiDao;
+import com.ksxt.dao.PanduanDao;
+import com.ksxt.dao.ShijuanDao;
+import com.ksxt.dao.ShitiDao;
+import com.ksxt.model.Shijuan;
+import com.ksxt.model.Shiti;
+import com.ksxt.service.IKaoshiService;
+import com.ksxt.vo.BaseResult;
+
+@Service
+public class KaoshiServiceImpl implements IKaoshiService {
+	private static Logger logger = LoggerFactory.getLogger(KaoshiServiceImpl.class);
+	
+	@Autowired
+	private ShijuanDao shijuanDao;
+	
+	@Autowired
+	private ShitiDao shitiDao;
+	
+	@Autowired
+	private DanxuanDao danxuanDao;
+	
+	@Autowired
+	private DuoxuanDao duoxuanDao;
+	
+	@Autowired
+	private PanduanDao panduanDao;
+	
+	@Autowired
+	private AnlifenxiDao anlifenxiDao;
+	
+	@Autowired
+	private JisuanfenxiDao jisuanfenxiDao;
+	
+	/* (non-Javadoc)
+	 * @see com.ksxt.service.IKaoshiService#getSJsByKcId(java.lang.Integer)
+	 */
+	@Override
+	public List<Shijuan> getSJsByKcId(Integer kcId) {
+		// get shijuan list by kc id
+		logger.debug("get shijuan list by kecheng id...");
+		
+		return shijuanDao.getSJsByKcId(kcId);
+	}
+
+	/* (non-Javadoc)
+	 * @see com.ksxt.service.IKaoshiService#getShiti(java.lang.Integer)
+	 */
+	@Override
+	public BaseResult getShitiInfo(Long stId) {
+		Map<String, Object> result = new HashMap<String, Object>();
+		// get shiti
+		logger.debug("get shi ti...");
+		Shiti shiti = shitiDao.select(stId);
+		result.put("st", shiti);
+		
+		// get timu
+		logger.debug("get ti mu...");
+		switch(shiti.getTxId()) {
+		case 1:
+			// danxuan
+        	result.put("tm", danxuanDao.select(shiti.getTmId()));
+        	break;
+		case 2:
+			// duoxuan
+			result.put("tm", duoxuanDao.select(shiti.getTmId()));
+			break;
+		case 3:
+			// panduan
+			result.put("tm", panduanDao.select(shiti.getTmId()));
+			break;
+		case 4:
+			// jisuanfenxi
+			result.put("tm", jisuanfenxiDao.select(shiti.getTmId()));
+			break;
+		case 5:
+			// anlifenxi
+			result.put("tm", anlifenxiDao.select(shiti.getTmId()));
+			break;
+		default:
+			throw new ApplicationException(ErrorCode.ERR_SYS_INTERNAL_ERROR.toString(), "无效题型");
+		}
+		return new BaseResult(ErrorCode.SUCCESS, result);
+	}
+
+}

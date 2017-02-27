@@ -1,0 +1,6 @@
+package com.ksxt.dao;
+
+import com.ksxt.model.Anlifenxi;
+
+public interface AnlifenxiDao extends GenericDao<Anlifenxi, Long> {
+}

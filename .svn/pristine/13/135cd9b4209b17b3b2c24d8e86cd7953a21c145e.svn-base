@@ -1,0 +1,110 @@
+/**
+ * @author ming
+ * @date 2017年2月9日 下午3:41:23
+ */
+package com.ksxt.controller;
+
+import java.io.File;
+
+import javax.servlet.http.HttpServletRequest;
+
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.multipart.MultipartFile;
+
+import com.ksxt.common.constant.ErrorCode;
+import com.ksxt.common.constant.SystemSettings;
+import com.ksxt.core.helper.MessageManager;
+import com.ksxt.model.Tiku;
+import com.ksxt.service.ITikuService;
+import com.ksxt.vo.BaseResult;
+import com.ksxt.vo.KsxtPageInfo;
+import com.ksxt.vo.TikuParam;
+
+@Controller
+@RequestMapping("/tiku")
+public class TikuController {
+	private static final Logger logger = LoggerFactory.getLogger(TikuController.class);
+	
+	@Autowired
+	private ITikuService tikuService;
+	
+	@RequestMapping("upload")
+	public String upload() {
+		return "home/upload";
+	}
+	
+	@RequestMapping("save")
+	public String save(String name, Integer kcId, MultipartFile file, Model model, HttpServletRequest request) {
+		logger.debug("upload tiku request...");
+		logger.debug("parameter:name[" + name + "], kcId[" + kcId + "], file[" + file.getName() + "]");
+		
+		BaseResult result = null;
+		
+		// check file
+		logger.debug("check file...");
+		result = tikuService.check(name, kcId, file);
+		if(result.getCode().longValue() == ErrorCode.SUCCESS.longValue()) {
+			// check temp dir
+			logger.debug("check temp dir...");
+			String tempDir = request.getSession().getServletContext().getRealPath("/") + SystemSettings.TEMP_DIR + kcId + File.separator;
+			if(!new File(tempDir).isDirectory()) {
+				// create temp dir
+				logger.debug("create temp dir...");
+				new File(tempDir).mkdirs();
+			}
+			
+			// save to server
+			logger.debug("save to server...");
+			try {
+				result = tikuService.save(tempDir, name, kcId, file);
+			} catch (Exception e) {
+				logger.error("save file fail.");
+				return "TODO";
+			}
+		}
+		
+		if(result.getCode().longValue() != ErrorCode.SUCCESS.longValue()) {
+			logger.debug("fail to upload file.");
+			model.addAttribute("msg", MessageManager.getMsg(result.getCode().toString()));
+			return "TODO";
+		}
+		
+		return "TODO";
+	}
+	
+	@SuppressWarnings("unchecked")
+	@RequestMapping("view")
+	public String view(@RequestParam(required = false) Integer kcId, @RequestParam(required = false) Integer status, @RequestParam(required = false, defaultValue="1") Integer page, Model model, HttpServletRequest request) {
+		logger.debug("view tiku request...");
+		logger.debug("parameter:kcId[" + kcId + "], status[" + status + "], page[" + page + "]");
+		
+		BaseResult result = null;
+		
+		// get tiku list
+		TikuParam param = new TikuParam();
+		param.setKcId(kcId);
+		param.setStatus(status);
+		result = tikuService.list(param, page);
+		
+		model.addAttribute("pageInfo", (KsxtPageInfo<Tiku>) result.getData());
+		return "TODO";
+	}
+	
+	@RequestMapping("delete")
+	public String delete(Integer tikuId, Model model, HttpServletRequest request) {
+		logger.debug("delete tiku request...");
+		logger.debug("parameter:tikuId[" + tikuId + "]");
+
+		// delete tiku
+		logger.debug("delete tiku...");
+		tikuService.delete(tikuId);
+		
+		return "TODO";
+	}
+}

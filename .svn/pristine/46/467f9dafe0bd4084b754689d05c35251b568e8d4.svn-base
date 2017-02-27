@@ -1,0 +1,8 @@
+#文件夹
+log
+sql
+target
+#文件
+*api.properties
+*ali.properties
+*ds.properties

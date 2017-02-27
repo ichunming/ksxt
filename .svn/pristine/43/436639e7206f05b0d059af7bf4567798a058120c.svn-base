@@ -1,0 +1,25 @@
+package com.ksxt.common.constant;
+
+public enum TikuType {
+	DAN_XUAN("1", "单选"),
+	DUO_XUAN("2", "多选"),
+	PAN_DUAN("3", ""),
+	JI_SUAN_FEN_XI("4", "多选"),
+	AN_LI_FEN_XI("5", "多选");
+	
+	private String code;
+	private String desc;
+	
+	private TikuType(String code, String desc) {
+		this.code = code;
+		this.desc = desc;
+	}
+	
+	public String getCode() {
+		return code;
+	}
+	
+	public String toString() {
+		return desc;
+	}
+}

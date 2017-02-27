@@ -1,0 +1,26 @@
+package com.ksxt.dao;
+
+import com.ksxt.model.User;
+
+public interface UserDao extends GenericDao<User, Long> {
+	/**
+	 * 插入用户信息并返回UID
+	 * @param user
+	 * @return
+	 */
+	public Long insertUseGenKey(User user);
+	
+	/**
+	 * 通过手机号码查找用户
+	 * @param mobile
+	 * @return
+	 */
+	public User getByMobile(String mobile);
+	
+	/**
+	 * 通过用户名查找用户
+	 * @param username
+	 * @return
+	 */
+	public User getByUsername(String username);
+}

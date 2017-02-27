@@ -1,0 +1,6 @@
+package com.ksxt.dao;
+
+import com.ksxt.model.Jisuanfenxi;
+
+public interface JisuanfenxiDao extends GenericDao<Jisuanfenxi, Long> {
+}

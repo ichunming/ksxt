@@ -1,0 +1,328 @@
+﻿.ui-select .ui-btn {
+    font-size: 18px;
+}
+html {
+    font-size: 150%;
+}
+@media screen and (max-width: 1024px) {
+html {
+    font-size: 120%;
+}
+.ui-select .ui-btn {
+    font-size: 16px;
+}
+}
+@media screen and (max-width: 600px) {
+html {
+    font-size: 100%;
+}
+.ui-select .ui-btn {
+    font-size: 14px;
+}
+}
+@media screen and (max-width: 450px) {
+html {
+    font-size: 100%;
+}
+.ui-select .ui-btn {
+    font-size: 12px;
+}
+}
+@media screen and (max-width: 400px) {
+html {
+    font-size: 90%;
+}
+.ui-select .ui-btn {
+    font-size: 12px;
+}
+}
+@media screen and (max-width: 370px) {
+html {
+    font-size: 90%;
+}
+.ui-select .ui-btn {
+    font-size: 12px;
+}
+}
+@media screen and (max-width: 350px) {
+html {
+    font-size: 80%;
+}
+.ui-select .ui-btn {
+    font-size: 11px;
+}
+}
+#Top{
+  position:fixed;
+  bottom:5px;
+  right:10px
+}
+.divTop {
+            float: none;
+            width: 100%;
+            border-bottom: thin solid #375f7f;
+            margin-top: 10px;
+            padding-top: 5px;
+            padding-bottom: 5px;
+            height:50px;
+        }
+.info, .title, .level, .cost, .point{
+            font-weight: bold  !important;
+            color: #2E6388  !important;
+        }
+
+.pointTotal{
+            font-weight: bold  !important;
+            color: #FFFFFF  !important;
+}
+.liANew{
+            font-weight: bold  !important;
+            color: #2E6388  !important;
+}
+
+.selTitle
+, .selection
+, .divTitle
+, .divLevel
+, .labTitle{
+   color: #000000  !important;
+}
+
+.selTitle
+, .selection
+, .divTitle
+, .divLevel{
+   font-weight: bold !important;
+}
+
+.divTopFL {
+            margin-left: 5px;
+            margin-top:0px;
+        }
+li.hasImg img {
+            height: 80px;
+            margin-left: 10px;
+            padding-top:15px;
+        }
+.remainder{
+    color:#f5868a;
+    font-weight: bold;
+    }
+.code{
+   margin:6px 10px 6px 10px;;
+   font-size: 1em;
+   }
+.divListInput
+   {
+   padding-left:40px;
+   margin-top:-20px;
+   }
+.textInput
+   {
+   width:50px;margin-left:2px;height:auto;text-align:center;border-radius:8px;
+   border-color:rgba(154, 154, 154, 0.35);
+   border:2px solid rgb(90, 145, 192);
+   }
+
+.selectForm
+{
+    margin-top:-20px;
+    padding-left:15px;
+}
+.divFloatL{
+        margin-left:5px;
+      margin-top:10px;  
+}
+.divRowDetail{
+    float:none;
+    width:100%; 
+    border-bottom:thin solid #375f7f;
+    height:110px;
+      margin-top:0px;
+      padding-top:5px;
+      padding-bottom:5px;      
+}
+#listGrid3 .ui-grid-b .ui-block-a {
+    width: 15%;
+}
+
+#listGrid3 .ui-grid-b .ui-block-b {
+    width: 40%;
+}
+
+#listGrid3 .ui-grid-b .ui-block-c {
+    width: 35%;
+}
+
+.tableList{
+}
+
+.ui-grid-a .ui-btn{
+   margin: 0px 0px 5px 0px;
+ }
+
+.ui-grid-a .right{
+  margin-right: 5px;
+}
+
+.ui-grid-a .left{
+  margin-left: 5px;
+}
+
+.slider {
+    width: 100%;
+    margin: 0px auto;
+}
+
+.slick-slide img {
+  width: 100%;
+}
+.screenSelect {
+  float:left;
+}
+.divRowDetailHeight{   
+    height:100px;
+ }      
+.divRowDetailContent{ 
+     padding-top:0px;
+}
+.divRowDetailUl{ 
+}
+.divRowDetailImgHeight   {
+  float:left;
+  height:80px;
+  line-height:20px
+}
+.pt0{
+  padding-top:0px;
+}
+.divH80{
+  height:80px;
+}
+.divH100{
+  height:100px;
+}
+.divMal{
+ float:left;height:80px;line-height:27px;
+}
+.divShopCart{
+ float:left;height:80px;line-height:20px;
+}
+.divExchange{
+ float:left;height:100px;line-height:20px;
+}
+.selForm{
+ margin-top: -20px;padding-left: 15px;
+}
+.selDiv{
+ float:left;margin-top:13px;
+}
+.divFL{
+ float:left;
+}
+.shopping
+{
+position:absolute;bottom:0;right:0;border-radius:10px;
+}
+.fontSizeS
+{
+}
+.verticalAlignM
+{
+vertical-align:middle
+}
+.spanTitle
+{
+}
+.spanMess{
+}
+.opacity08{
+opacity:0.8;
+}
+.displayInline
+{
+display:inline;
+}
+.mt0{
+margin-top:0px !important;
+}
+.mt7
+{
+margin-top:7px !important;
+}
+.fontSize18
+{
+}
+.wordBreak
+{
+word-break:break-all;
+}
+.divMsg{
+color:red;
+}
+.menu-message{
+    position: absolute;
+    line-height: inherit;
+    right: inherit;
+    color: #f5868a;
+    border-style: none;
+}
+Button.appleButton{
+  height:60px;
+  width:260px;
+  color:#000000;
+  background-color:#ededed;
+  font-size:16px;
+  font-weight:normal;
+  font-family:Arial;
+  background:-webkit-gradient(linear, left top, left bottom, color-start(0.05, #ffffff), color-stop(1, #00fffc));
+  background:-moz-linear-gradient(top, #ffffff 5%, #00fffc 100%);
+  background:-o-linear-gradient(top, #ffffff 5%, #00fffc 100%);
+  background:-ms-linear-gradient(top, #ffffff 5%, #00fffc 100%);
+  background:linear-gradient(to bottom, #ffffff 5%, #00fffc 100%);
+  background:-webkit-linear-gradient(top, #ffffff 5%, #00fffc 100%);
+  filter:progid:DXImageTransform.Microsoft.gradient(startColorstr='#ffffff', endColorstr='#00fffc',GradientType=0);
+  border:1px solid #006c14;
+  -webkit-border-top-left-radius:8px;
+  -moz-border-radius-topleft:8px;
+  border-top-left-radius:8px;
+  -webkit-border-top-right-radius:8px;
+  -moz-border-radius-topright:8px;
+  border-top-right-radius:8px;
+  -webkit-border-bottom-left-radius:8px;
+  -moz-border-radius-bottomleft:8px;
+  border-bottom-left-radius:8px;
+  -webkit-border-bottom-right-radius:8px;
+  -moz-border-radius-bottomright:8px;
+  border-bottom-right-radius:8px;
+  -moz-box-shadow:3px 4px 0px -20px #1564ad;
+  -webkit-box-shadow:3px 4px 0px -20px #1564ad;
+  box-shadow:3px 4px 0px -20px #1564ad;
+  text-align:center;
+  display:inline-block;
+  text-decoration:none;
+}
+.appleButton:hover{
+  background-color:#f5f5f5;
+  background:-webkit-gradient(linear, left top, left bottom, color-start(0.05, #00fffc), color-stop(1, #ffffff));
+  background:-moz-linear-gradient(top, #00fffc 5%, #ffffff 100%);
+  background:-o-linear-gradient(top, #00fffc 5%, #ffffff 100%);
+  background:-ms-linear-gradient(top, #00fffc 5%, #ffffff 100%);
+  background:linear-gradient(to bottom, #00fffc 5%, #ffffff 100%);
+  background:-webkit-linear-gradient(top, #00fffc 5%, #ffffff 100%);
+  filter:progid:DXImageTransform.Microsoft.gradient(startColorstr='#00fffc', endColorstr='#ffffff',GradientType=0);
+}
+
+.footer-button-left,
+.footer-button-right {
+    position: absolute;
+    margin: 0;
+    top: auto;
+    bottom: 0.24em;
+}
+.footer-button-left {
+    left: 0.4em;
+}
+.footer-button-right {
+    right: 0.4em;
+}

@@ -1,0 +1,52 @@
+package com.ksxt.common.helper;
+
+public class SessionInfo {
+	
+	private Long uid;
+	
+	private String username;
+	
+	private String mobile;
+	
+	private KaoshiInfo ksInfo;
+
+	public KaoshiInfo getKsInfo() {
+		return ksInfo;
+	}
+
+	public void setKsInfo(KaoshiInfo ksInfo) {
+		this.ksInfo = ksInfo;
+	}
+
+	public SessionInfo() {}
+    
+    public SessionInfo(Long uid, String username, String mobile) {
+    	this.uid = uid;
+    	this.username = username;
+    	this.mobile = mobile;
+    }
+	
+    public String getUsername() {
+		return username;
+	}
+
+	public void setUsername(String username) {
+		this.username = username;
+	}
+
+	public String getMobile() {
+		return mobile;
+	}
+
+	public void setMobile(String mobile) {
+		this.mobile = mobile;
+	}
+    
+	public Long getUid() {
+		return uid;
+	}
+
+	public void setUid(Long uid) {
+		this.uid = uid;
+	}
+}

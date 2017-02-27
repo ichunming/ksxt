@@ -1,0 +1,156 @@
+/**
+ * @author ming
+ * @date 2017年2月7日 上午10:08:41
+ */
+package com.ksxt.service.impl;
+
+import java.util.Date;
+
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+
+import com.ksxt.common.constant.ErrorCode;
+import com.ksxt.common.constant.UserStatus;
+import com.ksxt.common.util.DateUtil;
+import com.ksxt.common.util.EncryptionUtil;
+import com.ksxt.common.util.RandomUtil;
+import com.ksxt.common.util.StringUtil;
+import com.ksxt.dao.UserDao;
+import com.ksxt.model.User;
+import com.ksxt.service.IUserService;
+import com.ksxt.vo.BaseResult;
+import com.ksxt.vo.UserForm;
+
+@Service
+public class UserServiceImpl implements IUserService {
+	private static final Logger logger = LoggerFactory.getLogger(UserServiceImpl.class);
+	
+	@Autowired
+	private UserDao userDao;
+	
+	/* (non-Javadoc)
+	 * @see com.ksxt.service.IUserService#register(java.lang.String, java.lang.String, java.lang.String)
+	 */
+	@Override
+	public BaseResult register(UserForm userForm) {
+		
+		// check mobile format
+		logger.debug("check mobile...");
+		if(!StringUtil.isMobile(userForm.getMobile())) {
+			// mobile format wrong
+			logger.debug("mobile format wrong.");
+			return new BaseResult(ErrorCode.ERR_USER_MOBILE_FORMAT_WRONG);
+		}
+		
+		// check username exist-double check
+		if(isUsernameExist(userForm.getUsername())) {
+			logger.debug("username already exist.");
+			return new BaseResult(ErrorCode.ERR_USER_USERNAME_EXIST, "Username Already Exist");
+		}
+		
+		// check mobile exist-double check
+		if(isMobileExist(userForm.getMobile())) {
+			logger.debug("mobile already exist.");
+			return new BaseResult(ErrorCode.ERR_USER_MOBILE_EXIST, "Mobile Already Exist");
+		}
+		
+		// register by mobile
+		logger.debug("register user...");
+		User user = registerUser(userForm.getPassword());
+		user.setUsername(userForm.getUsername());
+        user.setMobile(userForm.getMobile());
+        userDao.insertUseGenKey(user);
+		
+		return new BaseResult(ErrorCode.SUCCESS, user);
+	}
+	
+	/* (non-Javadoc)
+	 * @see com.ksxt.service.IUserService#login(java.lang.String, java.lang.String)
+	 */
+	@Override
+	public BaseResult login(UserForm userForm) {
+
+		// get user
+		logger.debug("get user...");
+		User user = userDao.getByMobile(userForm.getUsername());
+		if(null == user) {
+			user = userDao.getByUsername(userForm.getUsername());
+		}
+		
+		// check user exist
+		if(null == user) {
+			logger.debug("user not exist.");
+			return new BaseResult(ErrorCode.ERR_USER_NOT_EXIST, "User Not Exist");
+		}
+		
+		// check status
+		logger.debug("check status...");
+		if(user.getStatus() == UserStatus.Invalid.getCode()) {
+			// unauth
+			logger.debug("unauthenticated...");
+			return new BaseResult(ErrorCode.ERR_USER_UNAUTHEN, "User Unauth");
+		} else if(user.getStatus() == UserStatus.Locked.getCode()) {
+			// locked
+			logger.debug("locked...");
+			return new BaseResult(ErrorCode.ERR_USER_LOCK, "User Been Locked");
+		}
+		
+		// check password
+		logger.debug("check password...");
+		if(!EncryptionUtil.match(genPwd(userForm.getPassword(), user.getSalt()), user.getPassword())) {
+			// unmatch
+			logger.debug("password not match...");
+			return new BaseResult(ErrorCode.ERR_USER_PASSWD_INVALID, "Password Not Match");
+		}
+
+		return new BaseResult(ErrorCode.SUCCESS, user);
+	}
+	
+	/* (non-Javadoc)
+	 * @see com.ksxt.service.IUserService#isMobileExist(java.lang.String)
+	 */
+	@Override
+	public boolean isMobileExist(String mobile) {
+		if(null == userDao.getByMobile(mobile)) {
+			return false;
+		}
+		return true;
+	}
+	
+	/* (non-Javadoc)
+	 * @see com.ksxt.service.IUserService#isUsernameExist(java.lang.String)
+	 */
+	@Override
+	public boolean isUsernameExist(String username) {
+		if(null == userDao.getByUsername(username)) {
+			return false;
+		}
+		return true;
+	}
+	
+	private String genPwd(String password, String salt) {
+		return password + salt;
+	}
+	
+	private User registerUser(String password) {
+		// 构造随机数作为salt
+		logger.debug("generate salt...");
+        String salt = RandomUtil.genCharacterString(16);
+        // 默认算法加密
+        logger.debug("encrypt password...");
+        String enPwd = EncryptionUtil.encode(genPwd(password, salt));
+        // 创建用户
+        logger.debug("create user...");
+        Date current = DateUtil.current();
+        User user = new User();
+        user.setSalt(salt);
+        user.setPassword(enPwd);
+        user.setStatus(UserStatus.Invalid.getCode());
+        user.setCreateDate(current);
+        user.setUpdateDate(current);
+        
+        return user;
+	}
+}

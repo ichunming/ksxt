@@ -1,0 +1,26 @@
+/**
+ * @author ming
+ * @date 2017年2月16日 下午3:01:11
+ */
+package com.ksxt.service;
+
+import java.util.List;
+
+import com.ksxt.model.Shijuan;
+import com.ksxt.vo.BaseResult;
+
+public interface IKaoshiService {
+	/**
+	 * 根据课程ID取得试卷列表
+	 * @param kcId
+	 * @return
+	 */
+	public List<Shijuan> getSJsByKcId(Integer kcId);
+	
+	/**
+	 * 根据试题ID取得试题信息
+	 * @param stId
+	 * @return
+	 */
+	public BaseResult getShitiInfo(Long stId);
+}

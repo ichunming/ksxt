@@ -1,0 +1,4 @@
+com\ksxt\controller\external\ErrorRequestController.class
+com\ksxt\controller\TikuController.class
+com\ksxt\controller\UserController.class
+com\ksxt\controller\external\ExceptionController.class

@@ -1,0 +1,169 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ksxt.dao.DanxuanDao">
+  <resultMap id="BaseResultMap" type="com.ksxt.model.Danxuan">
+    <id column="id" jdbcType="BIGINT" property="id" />
+    <result column="tk_id" jdbcType="INTEGER" property="tkId" />
+    <result column="subject" jdbcType="VARCHAR" property="subject" />
+    <result column="image" jdbcType="VARCHAR" property="image" />
+    <result column="option_a" jdbcType="VARCHAR" property="optionA" />
+    <result column="option_b" jdbcType="VARCHAR" property="optionB" />
+    <result column="option_c" jdbcType="VARCHAR" property="optionC" />
+    <result column="option_d" jdbcType="VARCHAR" property="optionD" />
+    <result column="answer" jdbcType="CHAR" property="answer" />
+    <result column="analysis" jdbcType="VARCHAR" property="analysis" />
+    <result column="create_date" jdbcType="TIMESTAMP" property="createDate" />
+    <result column="update_date" jdbcType="TIMESTAMP" property="updateDate" />
+  </resultMap>
+  
+  <sql id="Base_Column_List">
+    id, tk_id, subject, image, option_a, option_b, option_c, option_d, answer, analysis, 
+    create_date, update_date
+  </sql>
+
+  <select id="select" parameterType="java.lang.Long" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from danxuan
+    where id = #{id,jdbcType=BIGINT}
+  </select>
+  
+  <delete id="delete" parameterType="java.lang.Long">
+    delete from danxuan
+    where id = #{id,jdbcType=BIGINT}
+  </delete>
+  
+  <insert id="insert" parameterType="com.ksxt.model.Danxuan">
+    insert into danxuan
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        id,
+      </if>
+      <if test="tkId != null">
+        tk_id,
+      </if>
+      <if test="subject != null">
+        subject,
+      </if>
+      <if test="image != null">
+        image,
+      </if>
+      <if test="optionA != null">
+        option_a,
+      </if>
+      <if test="optionB != null">
+        option_b,
+      </if>
+      <if test="optionC != null">
+        option_c,
+      </if>
+      <if test="optionD != null">
+        option_d,
+      </if>
+      <if test="answer != null">
+        answer,
+      </if>
+      <if test="analysis != null">
+        analysis,
+      </if>
+      <if test="createDate != null">
+        create_date,
+      </if>
+      <if test="updateDate != null">
+        update_date,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        #{id,jdbcType=BIGINT},
+      </if>
+      <if test="tkId != null">
+        #{tkId,jdbcType=INTEGER},
+      </if>
+      <if test="subject != null">
+        #{subject,jdbcType=VARCHAR},
+      </if>
+      <if test="image != null">
+        #{image,jdbcType=VARCHAR},
+      </if>
+      <if test="optionA != null">
+        #{optionA,jdbcType=VARCHAR},
+      </if>
+      <if test="optionB != null">
+        #{optionB,jdbcType=VARCHAR},
+      </if>
+      <if test="optionC != null">
+        #{optionC,jdbcType=VARCHAR},
+      </if>
+      <if test="optionD != null">
+        #{optionD,jdbcType=VARCHAR},
+      </if>
+      <if test="answer != null">
+        #{answer,jdbcType=CHAR},
+      </if>
+      <if test="analysis != null">
+        #{analysis,jdbcType=VARCHAR},
+      </if>
+      <if test="createDate != null">
+        #{createDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateDate != null">
+        #{updateDate,jdbcType=TIMESTAMP},
+      </if>
+    </trim>
+  </insert>
+  
+  <update id="update" parameterType="com.ksxt.model.Danxuan">
+    update danxuan
+    <set>
+      <if test="tkId != null">
+        tk_id = #{tkId,jdbcType=INTEGER},
+      </if>
+      <if test="subject != null">
+        subject = #{subject,jdbcType=VARCHAR},
+      </if>
+      <if test="image != null">
+        image = #{image,jdbcType=VARCHAR},
+      </if>
+      <if test="optionA != null">
+        option_a = #{optionA,jdbcType=VARCHAR},
+      </if>
+      <if test="optionB != null">
+        option_b = #{optionB,jdbcType=VARCHAR},
+      </if>
+      <if test="optionC != null">
+        option_c = #{optionC,jdbcType=VARCHAR},
+      </if>
+      <if test="optionD != null">
+        option_d = #{optionD,jdbcType=VARCHAR},
+      </if>
+      <if test="answer != null">
+        answer = #{answer,jdbcType=CHAR},
+      </if>
+      <if test="analysis != null">
+        analysis = #{analysis,jdbcType=VARCHAR},
+      </if>
+      <if test="createDate != null">
+        create_date = #{createDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateDate != null">
+        update_date = #{updateDate,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+  
+  <insert id="batchInsert" parameterType="com.ksxt.model.Danxuan">
+    insert into danxuan (tk_id, subject, image, 
+      option_a, option_b, option_c, 
+      option_d, answer, analysis, 
+      create_date, update_date)
+    values
+    <foreach collection="list" item="item" separator="," >
+      (#{item.tkId,jdbcType=INTEGER}, #{item.subject,jdbcType=VARCHAR}, #{item.image,jdbcType=VARCHAR},
+      #{item.optionA,jdbcType=VARCHAR}, #{item.optionB,jdbcType=VARCHAR}, #{item.optionC,jdbcType=VARCHAR}, 
+      #{item.optionD,jdbcType=VARCHAR}, #{item.answer,jdbcType=CHAR}, #{item.analysis,jdbcType=VARCHAR}, 
+      #{item.createDate,jdbcType=TIMESTAMP}, #{item.updateDate,jdbcType=TIMESTAMP})
+	</foreach>
+  </insert>
+</mapper>

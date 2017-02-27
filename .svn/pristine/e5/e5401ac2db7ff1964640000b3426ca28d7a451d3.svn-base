@@ -1,0 +1,122 @@
+/**
+ * @author ming
+ * @date 2017年2月16日 下午2:54:48
+ */
+package com.ksxt.controller;
+
+import java.util.List;
+import java.util.Map;
+
+import javax.servlet.http.HttpServletRequest;
+
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
+
+import com.ksxt.common.constant.ErrorCode;
+import com.ksxt.common.helper.KaoshiInfo;
+import com.ksxt.common.helper.SessionInfo;
+import com.ksxt.common.util.SessionUtil;
+import com.ksxt.core.helper.MessageManager;
+import com.ksxt.model.Anlifenxi;
+import com.ksxt.model.Danxuan;
+import com.ksxt.model.Duoxuan;
+import com.ksxt.model.Jisuanfenxi;
+import com.ksxt.model.Panduan;
+import com.ksxt.model.Shijuan;
+import com.ksxt.model.Shiti;
+import com.ksxt.service.IKaoshiService;
+import com.ksxt.vo.BaseResult;
+
+@Controller
+@RequestMapping("/kaoshi")
+public class KaoshiController {
+	private static Logger logger = LoggerFactory.getLogger(KaoshiController.class);
+
+	@Autowired
+	private IKaoshiService kaoshiService;
+	
+	@RequestMapping(value = "shijuan/list", method={RequestMethod.POST, RequestMethod.GET})
+	public String list(Integer kcId, Model model) {
+		logger.debug("shijuan list request...");
+		logger.debug("parameter:kcId[" + kcId + "]");
+		
+		// get shijuan list
+		logger.debug("get shijuan list...");
+		List<Shijuan> sjList = kaoshiService.getSJsByKcId(kcId);
+		
+		if(sjList.size() == 0) {
+			logger.debug("shijuan not create.");
+			model.addAttribute("msg", MessageManager.getMsg(ErrorCode.ERR_MGR_SJ_NOT_CREATE.toString()));
+		} else {
+			model.addAttribute("sjList", sjList);
+		}
+		
+		return null;
+	}
+	
+	@SuppressWarnings("unchecked")
+	@RequestMapping(value = "shiti/get", method={RequestMethod.POST, RequestMethod.GET})
+	public String getShiti(Long stId, Model model, HttpServletRequest request) {
+		logger.debug("shiti get request...");
+		logger.debug("parameter:stId[" + stId + "]");
+		
+		// get shiti
+		logger.debug("get shi ti...");
+		BaseResult result = kaoshiService.getShitiInfo(stId);
+		Map<String, Object> data = (Map<String, Object>) result.getData();
+		Shiti st = (Shiti) data.get("st");
+		Object tm = data.get("tm");
+		
+		SessionInfo sessionInfo = SessionUtil.getSessionInfo(request);
+		KaoshiInfo ksInfo = null;
+		if(null == sessionInfo.getKsInfo()) {
+			ksInfo = new KaoshiInfo();
+			ksInfo.setSjId(st.getSjId());
+			ksInfo.setTxId(st.getTxId());
+			ksInfo.setNo(1);
+			
+			sessionInfo.setKsInfo(ksInfo);
+		} else {
+			ksInfo = sessionInfo.getKsInfo();
+			if(ksInfo.getTxId() != st.getTxId()) {
+				ksInfo.setTxId(st.getTxId());
+				ksInfo.setNo(1);
+			} else {
+				ksInfo.setNo(ksInfo.getNo() + 1);
+			}
+		}
+		
+		model.addAttribute("no", ksInfo.getNo());
+		model.addAttribute("st", st);
+		
+		switch (st.getTxId()) {
+		case 1:
+			// danxuan
+			model.addAttribute("tm", (Danxuan) tm);
+        	return "danxuan";
+		case 2:
+			// duoxuan
+			model.addAttribute("tm", (Duoxuan) tm);
+        	return "duoxuan";
+		case 3:
+			// panduan
+			model.addAttribute("tm", (Panduan) tm);
+        	return "panduan";
+		case 4:
+			// jisuanfenxi
+			model.addAttribute("tm", (Jisuanfenxi) tm);
+        	return "jisuanfenxi";
+		case 5:
+			// anlifenxi
+			model.addAttribute("tm", (Anlifenxi) tm);
+			return "anlifenxi";
+		default:
+			return "redirect:/500";
+		}
+	}
+}

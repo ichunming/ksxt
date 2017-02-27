@@ -1,0 +1,84 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ksxt.dao.KaoshiLogDao">
+  <resultMap id="BaseResultMap" type="com.ksxt.model.KaoshiLog">
+    <result column="uid" jdbcType="BIGINT" property="uid" />
+    <result column="sj_id" jdbcType="BIGINT" property="sjId" />
+    <result column="st_id" jdbcType="BIGINT" property="stId" />
+    <result column="score" jdbcType="REAL" property="score" />
+    <result column="version" jdbcType="INTEGER" property="version" />
+    <result column="create_date" jdbcType="TIMESTAMP" property="createDate" />
+  </resultMap>
+  
+  <sql id="Base_Column_List">
+    uid, sj_id, st_id, score, version, create_date
+  </sql>
+  
+  <insert id="insert" parameterType="com.ksxt.model.KaoshiLog">
+    insert into kaoshi_log
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="uid != null">
+        uid,
+      </if>
+      <if test="sjId != null">
+        sj_id,
+      </if>
+      <if test="stId != null">
+        st_id,
+      </if>
+      <if test="score != null">
+        score,
+      </if>
+      <if test="version != null">
+        version,
+      </if>
+      <if test="createDate != null">
+        create_date,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="uid != null">
+        #{uid,jdbcType=BIGINT},
+      </if>
+      <if test="sjId != null">
+        #{sjId,jdbcType=BIGINT},
+      </if>
+      <if test="stId != null">
+        #{stId,jdbcType=BIGINT},
+      </if>
+      <if test="score != null">
+        #{score,jdbcType=REAL},
+      </if>
+      <if test="version != null">
+        #{version,jdbcType=INTEGER},
+      </if>
+      <if test="createDate != null">
+        #{createDate,jdbcType=TIMESTAMP},
+      </if>
+    </trim>
+  </insert>
+  
+  <select id="getCurVersion" resultType="java.lang.Integer">
+    select IFNULL(MAX(version), 0)
+    from kaoshi_log
+    where uid = #{uid, jdbcType=BIGINT}
+    and sj_id = #{sjId, jdbcType=BIGINT}
+  </select>
+  
+  <select id="getScore" resultType="java.lang.Float">
+    select SUM(score)
+    from kaoshi_log
+    where uid = #{uid, jdbcType=BIGINT}
+    and sj_id = #{sjId, jdbcType=BIGINT}
+  </select>
+  
+  <select id="select" resultMap="BaseResultMap">
+    select
+    <include refid="Base_Column_List" />
+    from kaoshi_log
+    where uid = #{uid, jdbcType=BIGINT}
+    and sj_id = #{sjId, jdbcType=BIGINT}
+    and st_id = #{stId, jdbcType=BIGINT}
+    and version = #{version, jdbcType=INTEGER}
+  </select>
+</mapper>

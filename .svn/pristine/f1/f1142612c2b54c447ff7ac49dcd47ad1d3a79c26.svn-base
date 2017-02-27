@@ -1,0 +1,20 @@
+// check--调用API, 有错误显示错误信息
+var check = function(url, data) {
+	$.ajax({
+	    url:url,
+	    type:'POST', //GET
+	    data:data,
+	    success:function(data){
+	    	var result = eval(data);
+	    	
+	    	if(result.code != 0) {
+	    		$(".divMsg span").text(result.data.content);
+	    	} else {
+	    		$(".divMsg span").text("");
+	    	}
+	    },
+	    error:function(xhr){
+	        console.log(xhr);
+	    }
+	})	
+}

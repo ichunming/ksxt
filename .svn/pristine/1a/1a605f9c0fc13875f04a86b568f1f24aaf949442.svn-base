@@ -1,0 +1,6 @@
+jdbc.validationQuery=SELECT 1
+jdbc.url=jdbc:mysql://localhost:3306/ksxtdb?useUnicode=true&characterEncoding=UTF-8&zeroDateTimeBehavior=convertToNull&allowMultiQueries=true
+#jdbc.username=ksxtuser
+#jdbc.username=ksxtuser
+jdbc.username=yimei
+jdbc.password=yymm1234

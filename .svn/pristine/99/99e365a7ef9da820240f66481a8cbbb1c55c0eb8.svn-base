@@ -1,0 +1,5 @@
+#surefire
+#Tue Feb 14 18:02:20 CST 2017
+user.dir=D\:\\eclipse_ws\\ksxt\\ksxt-mgr
+localRepository=D\:\\maven\\.m2\\repository
+basedir=D\:\\eclipse_ws\\ksxt\\ksxt-mgr

@@ -1,0 +1,27 @@
+/**
+ * @author ming
+ * @date 2017年2月10日 下午4:22:40
+ */
+package com.ksxt.vo;
+
+public class AnlifenxiVo {
+    private String no;
+
+    private String subject;
+
+	public String getNo() {
+		return no;
+	}
+
+	public void setNo(String no) {
+		this.no = no;
+	}
+
+	public String getSubject() {
+		return subject;
+	}
+
+	public void setSubject(String subject) {
+		this.subject = subject;
+	}
+}

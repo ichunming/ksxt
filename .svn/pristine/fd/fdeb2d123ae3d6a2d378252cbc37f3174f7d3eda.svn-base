@@ -1,0 +1,398 @@
+@charset "utf-8";
+/*====================================================
+	common styles
+====================================================*/
+html,body {
+	color: #505050;
+	line-height: 1em;
+	background: #f9f9f9;
+	position: relative;
+	margin: 0;
+	font-family: "Microsoft YaHei", "Xin Gothic", "Hiragino Sans GB", "Droid Sans Fallback", "Georgia", sans-serif;
+}
+button {
+	width: 80px;
+	height: 28px;
+	margin-left: 5px;
+	margin-right: 5px;
+	color: #008080;
+	font-weight: bold;
+	display: inline-block;
+	overflow: hidden;
+}
+button:disabled {
+	color:#808080;
+}
+button:hover {
+	cursor:hand;
+}
+input {
+	height: 25px;
+}
+input[type=checkbox] {
+    display: inline-block;
+    height: 1em;
+    width: 1em;
+    border-radius: 4px;
+    background-color: gray;   
+}
+input[type=file] {
+    color: #008080;
+}
+select {
+	height: 25px;
+}
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+  font-weight: 400;
+  color: #303030;
+}
+h1 {
+  font-size: 3em;
+}
+h2 {
+  font-size: 2.5em;
+}
+h3 {
+  font-size: 2em;
+}
+h4 {
+  margin-top: 25px;
+  font-size: 1.5em;
+}
+h5 {
+  font-size: 1em;
+}
+h6 {
+  font-size: 0.75em;
+}
+a {
+  color: #505050;
+  outline: none;
+}
+a:hover {
+  color: #009933;
+}
+a:active,
+a:focus,
+a img {
+  outline: none;
+}
+
+/**/
+.head {
+	background-color: #008080;
+	height: 50px;
+	line-height: 50px;
+	width: 100%;
+	min-width: 1200px;
+}
+.welcome {
+	padding-left: 100px;
+}
+.body {
+	width: 1200px;
+	margin: 40px auto;
+}
+.menu {
+	width: 260px;
+	float: left;
+}
+.menu ul {
+	margin: 0;
+	padding: 0 0 0 20px;
+	list-style: none;
+	background-color: #efefef;
+}
+.menu ul li a{
+  	color: #008080;
+  	height: 40px;
+  	line-height: 40px;
+  	width: 100%;
+  	display: inline-block;
+  	text-decoration: none;
+  	border-bottom: solid 1px #e6e8e9;
+}
+.menu ul li a:hover {
+	font-weight: bold;
+  	text-decoration: none;
+}
+.content {
+	width: 900px;
+	float: left;
+	margin-left: 8px;
+	background-color: #FFFFFF;
+	padding: 20px 15px;
+}
+.login-content {
+	width: 500px;
+	margin:40px auto;
+	margin-top: 180px;
+    background-color: #FFFFFF;
+    padding: 20px 15px;
+}
+.users-header {
+	font-weight: bold;
+	color: #008080;
+	padding-top: 5px;
+	padding-bottom: 10px;
+	border-bottom: solid 1px #008080;
+}
+.users-list {
+	padding-top: 10px;
+	padding-bottom: 10px;
+	border-bottom: solid 1px #008080;
+}
+
+.users-header-id {
+	display: inline-block;
+	width: 50px;
+	margin-left: 8px;
+	padding-left: 4px;
+}
+.users-header-name {
+	display: inline-block;
+	width: 150px;
+	margin-left: 8px;
+	padding-left: 4px;
+}
+.users-header-mobile {
+	display: inline-block;
+	width: 120px;
+	margin-left: 8px;
+	padding-left: 4px;
+}
+.users-header-pswd {
+	display: inline-block;
+	width: 200px;
+	margin-left: 8px;
+	padding-left: 4px;
+}
+.users-id {
+    display: inline-block;
+    width: 50px;
+    margin-left: 8px;
+    padding-left: 4px;
+}
+.users-name {
+    display: inline-block;
+    width: 150px;
+    margin-left: 8px;
+    padding-left: 4px;
+}
+.users-mobile {
+    display: inline-block;
+    width: 120px;
+    margin-left: 16px;
+    padding-left: 4px;
+}
+.users-pswd {
+    display: inline-block;
+    width: 200px;
+    margin-left: 12px;
+    padding-left: 4px;
+}
+.users-save .users-delete {
+	display: inline-block;
+	width: 100px;
+	padding-left: 8px;
+}
+.page-nav {
+	text-align: center;
+	padding-top: 15px;
+	padding-bottom: 10px;
+}
+.page-nav button {
+	text-align: center;
+	padding-left: 15px;
+	padding-right: 15px;
+	margin-left: 20px;	
+}
+.user-login {
+	text-align: center;
+}
+.user-login label {
+	color: #008080;
+	margin-top: 8px;
+}
+.user-login input {
+	margin-left: 10px;
+	margin-top: 15px;
+}
+.user-login button {
+	width:174px;
+	margin-left: 8px;
+	margin-top: 15px;
+}
+.user-login-save {
+	margin-left: 40px;
+}
+.divMsg {
+	color:#F08080;
+	padding: 10px;
+}
+.user-login-title {
+	font-size:120%;
+	color:#008080;
+	padding: 5px;
+}
+/*
+ke cheng
+*/
+.kcs-header {
+    font-weight: bold;
+    color: #008080;
+    padding-top: 5px;
+    padding-bottom: 10px;
+    border-bottom: solid 1px #008080;
+}
+.kcs-list {
+    padding-top: 10px;
+    padding-bottom: 10px;
+    border-bottom: solid 1px #008080;
+}
+
+.kcs-header-id {
+    display: inline-block;
+    width: 30px;
+    margin-left: 8px;
+    padding-left: 4px;
+}
+.kcs-header-title {
+    display: inline-block;
+    width: 100px;
+    margin-left: 8px;
+    padding-left: 4px;
+}
+.kcs-header-order {
+    display: inline-block;
+    width: 65px;
+    margin-left: 8px;
+    padding-left: 4px;
+}
+.kcs-header-status {
+    display: inline-block;
+    width: 65px;
+    margin-left: 8px;
+    padding-left: 4px;
+}
+.kcs-header-tx {
+    display: inline-block;
+    width: 434px;
+    margin-left: 8px;
+    padding-left: 4px;
+}
+.kcs-id {
+    display: inline-block;
+    width: 30px;
+    margin-left: 8px;
+    padding-left: 4px;
+}
+.kcs-title {
+    display: inline-block;
+    width: 100px;
+    margin-left: 8px;
+    padding-left: 4px;
+}
+.kcs-order {
+    display: inline-block;
+    width: 65px;
+    margin-left: 16px;
+    padding-left: 4px;
+}
+.kcs-status {
+    display: inline-block;
+    width: 65px;
+    margin-left: 12px;
+    padding-left: 4px;
+}
+.kcs-tx {
+	display:inline-block;
+	margin-left:8px;
+}
+.kcs-save .kcs-delete {
+    display: inline-block;
+    width: 100px;
+    padding-left: 8px;
+}
+.upload {
+	margin-bottom: 18px;
+	border-bottom: solid 2px #008080;
+}
+.upload .upload-left {
+	margin-left: 10px;
+}
+.upload .upload-right {
+    margin-left: 30px;	
+}
+.upload .upload-line {
+	height: 35px;
+}
+.upload input {
+	margin-left: 10px;
+}
+.upload .upload-btn {
+	margin-left: 0;
+}
+/*
+ti ku
+*/
+.tks-header {
+    font-weight: bold;
+    color: #008080;
+    padding-top: 5px;
+    padding-bottom: 10px;
+    border-bottom: solid 1px #008080;
+}
+.tks-list {
+    padding-top: 10px;
+    padding-bottom: 10px;
+    border-bottom: solid 1px #008080;
+}
+
+.tks-header-id {
+    display: inline-block;
+    width: 30px;
+    margin-left: 8px;
+    padding-left: 4px;
+}
+.tks-header-kc-name {
+    display: inline-block;
+    width: 100px;
+    margin-left: 10px;
+    padding-left: 4px;
+}
+.tks-header-tk-name {
+    display: inline-block;
+    width: 200px;
+    margin-left: 10px;
+    padding-left: 4px;
+}
+
+.tks-tk-id {
+    display: inline-block;
+    width: 30px;
+    margin-left: 8px;
+    padding-left: 4px;
+}
+.tks-kc-name {
+    display: inline-block;
+    width: 100px;
+    margin-left: 16px;
+    padding-left: 4px;
+}
+.tks-tk-name {
+    display: inline-block;
+    width: 200px;
+    margin-left: 16px;
+    padding-left: 4px;
+}
+.tks-distr, .tks-del {
+    display: inline-block;
+    width: 100px;
+    margin-left: 10px;
+}

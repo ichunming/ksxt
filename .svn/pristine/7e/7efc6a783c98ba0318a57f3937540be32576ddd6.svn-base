@@ -1,0 +1,8 @@
+package com.ksxt.common.constant;
+
+public class SystemConstant {
+	
+	public static final String SESSION_INFO_NAME = "KSXT-D07-M02-NAME";
+	
+	public static final String LIST_SPLIT = ",";
+}

@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="utf-8">
+    <link rel="stylesheet" href="/css/base.css">
+    <title>kaoshixitong</title>
+  </head>
+  <body>
+  	<div class="head">welcome</div>
+    <div class="body">
+      <div class="menu">
+        <ul>
+          <li><a href="#">用户管理</a>
+            <ul>
+              <li class="user"><a href="#">用户添加</a></li>
+              <li class="user"><a href="user-update.htm">用户修改</a></li>
+              <li class="user"><a href="user-check.htm">用户审核</a></li>
+            </ul>
+          </li>
+
+          <li><a href="#">课程管理</a>
+            <ul>
+              <li class="user"><a href="#">课程管理</a></li>
+              <li class="user"><a href="#">科目管理</a></li>
+              <li class="user"><a href="#">章节管理</a></li>
+              <li class="user"><a href="#">题库管理</a></li>
+            </ul>
+          </li>
+
+          <li><a href="#">试卷管理</a>
+            <ul>
+              <li class="exam"><a href="#">试卷方案</a></li>
+              <li class="exam"><a href="#">试题查看</a></li>
+            </ul>
+          </li>
+        </ul>
+      </div>
+      <div class="content">
+        <form action="#">
+          <div class="user-add">
+            <div><label>姓名</label><input type="text"></div>
+            <div><label>手机</label><input type="text"></div>
+            <div><label>权限</label><input type="text"></div>
+            <div><label>密码</label><input type="text"></div>
+            <div class="user-add-save"><button onclick="#">清空</button><button onclick="#">添加</button></div>
+          </div>
+        </form>
+      </div>
+    </div>
+  </body>
+</html>

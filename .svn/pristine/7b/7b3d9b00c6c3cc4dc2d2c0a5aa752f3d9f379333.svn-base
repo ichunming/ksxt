@@ -1,0 +1,81 @@
+/**
+ * @author ming
+ * @date 2017年2月21日 下午4:06:19
+ */
+package com.ksxt.vo;
+
+import com.ksxt.model.Kecheng;
+
+public class KechengVo {
+	private Integer kcId;
+	private String title;
+	private Integer orderId;
+	private Integer status;
+	private String danxuanCk;
+	private String duoxuanCk;
+	private String panduanCk;
+	private String anlifenxiCk;
+	private String jisuanfenxiCk;
+	
+	public Integer getKcId() {
+		return kcId;
+	}
+	public void setKcId(Integer kcId) {
+		this.kcId = kcId;
+	}
+	public String getTitle() {
+		return title;
+	}
+	public void setTitle(String title) {
+		this.title = title;
+	}
+	public Integer getOrderId() {
+		return orderId;
+	}
+	public void setOrderId(Integer orderId) {
+		this.orderId = orderId;
+	}
+	public Integer getStatus() {
+		return status;
+	}
+	public void setStatus(Integer status) {
+		this.status = status;
+	}
+	public String getDanxuanCk() {
+		return danxuanCk;
+	}
+	public void setDanxuanCk(String danxuanCk) {
+		this.danxuanCk = danxuanCk;
+	}
+	public String getDuoxuanCk() {
+		return duoxuanCk;
+	}
+	public void setDuoxuanCk(String duoxuanCk) {
+		this.duoxuanCk = duoxuanCk;
+	}
+	public String getPanduanCk() {
+		return panduanCk;
+	}
+	public void setPanduanCk(String panduanCk) {
+		this.panduanCk = panduanCk;
+	}
+	public String getAnlifenxiCk() {
+		return anlifenxiCk;
+	}
+	public void setAnlifenxiCk(String anlifenxiCk) {
+		this.anlifenxiCk = anlifenxiCk;
+	}
+	public String getJisuanfenxiCk() {
+		return jisuanfenxiCk;
+	}
+	public void setJisuanfenxiCk(String jisuanfenxiCk) {
+		this.jisuanfenxiCk = jisuanfenxiCk;
+	}
+	
+	public void fromEntity(Kecheng kc) {
+		kcId = kc.getId();
+		title = kc.getTitle();
+		orderId = kc.getOrderId();
+		status = kc.getStatus();
+	}
+}
